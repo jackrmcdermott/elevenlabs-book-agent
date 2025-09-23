@@ -4,6 +4,9 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "ElevenLabs Agent Demo",
+  icons: {
+    icon: "/favicon.png",
+  },
     generator: 'v0.app'
 }
 
