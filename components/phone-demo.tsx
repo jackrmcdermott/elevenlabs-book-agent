@@ -320,7 +320,7 @@ export default function PhoneDemo() {
   return (
     <div className="flex justify-center items-start min-h-screen relative">
       <div className="absolute left-6 top-6 w-72 bg-white rounded-lg shadow-lg border border-gray-200 p-4 flex-shrink-0">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Notes</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Agent Knowledge</h3>
         <div className="space-y-4">
           <div>
             <Label htmlFor="name" className="text-sm font-medium text-gray-700">
