@@ -166,7 +166,7 @@ export default function PhoneDemo() {
           },
         },
         dynamicVariables: {
-          firstName: firstName,
+          firstName: firstName || "there",
           chapterNumber: chapterNumber,
           lineText: currentParagraph || "Beginning of the book",
         },
