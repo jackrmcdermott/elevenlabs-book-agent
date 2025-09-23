@@ -318,7 +318,7 @@ export default function PhoneDemo() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start min-h-screen relative lg:gap-8 p-4">
+    <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start min-h-screen relative lg:gap-8 px-[19px] lg:p-4">
       <div className="w-full max-w-sm lg:max-w-xs bg-white rounded-lg shadow-lg border border-gray-200 p-4 flex-shrink-0 order-2 lg:order-1 lg:absolute lg:left-6 lg:top-6 mt-6 lg:mt-0">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Agent Knowledge</h3>
         <div className="space-y-4">
