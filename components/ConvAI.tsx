@@ -30,21 +30,25 @@ async function checkEnvironment() {
 
 async function getSignedUrl(): Promise<{ signedUrl: string; isDemo?: boolean }> {
   try {
-    console.log("Fetching signed URL...")
+    console.log("[v0] Fetching signed URL...")
+    console.log("[v0] Current domain:", window.location.hostname)
+    console.log("[v0] Current protocol:", window.location.protocol)
+
     const response = await fetch("/api/signed-url")
 
-    console.log("Response status:", response.status)
-    console.log("Response ok:", response.ok)
+    console.log("[v0] Response status:", response.status)
+    console.log("[v0] Response ok:", response.ok)
 
     if (!response.ok) {
       let errorData
       try {
         errorData = await response.json()
+        console.log("[v0] Error response data:", errorData)
       } catch {
         errorData = { error: `HTTP ${response.status}: ${response.statusText}` }
       }
 
-      console.error("API response error:", {
+      console.error("[v0] API response error:", {
         status: response.status,
         statusText: response.statusText,
         errorData,
@@ -54,7 +58,7 @@ async function getSignedUrl(): Promise<{ signedUrl: string; isDemo?: boolean }> 
     }
 
     const data = await response.json()
-    console.log("Successfully got signed URL")
+    console.log("[v0] Successfully got signed URL response:", { hasSignedUrl: !!data.signedUrl, isDemo: data.isDemo })
 
     if (!data.signedUrl) {
       throw new Error("No signed URL in response")
@@ -62,7 +66,7 @@ async function getSignedUrl(): Promise<{ signedUrl: string; isDemo?: boolean }> 
 
     return { signedUrl: data.signedUrl, isDemo: data.isDemo }
   } catch (error) {
-    console.error("Error in getSignedUrl:", error)
+    console.error("[v0] Error in getSignedUrl:", error)
     throw error
   }
 }
@@ -80,15 +84,21 @@ export function ConvAI() {
   const conversation = useConversation({
     mode: "webrtc",
     onConnect: () => {
-      console.log("Connected to conversation")
+      console.log("[v0] Connected to conversation")
       setError(null)
     },
     onDisconnect: () => {
-      console.log("Disconnected from conversation")
+      console.log("[v0] Disconnected from conversation")
       setIsLoading(false)
     },
     onError: (error) => {
-      console.error("Conversation error:", error)
+      console.error("[v0] Conversation error:", error)
+      console.log("[v0] Error details:", {
+        message: error.message,
+        code: error.code,
+        type: error.type,
+        stack: error.stack,
+      })
       if (isDemoMode) {
         setError("Demo mode: This is a placeholder connection. Set up your AGENT_ID for real functionality.")
       } else {
@@ -97,7 +107,7 @@ export function ConvAI() {
       setIsLoading(false)
     },
     onMessage: (message) => {
-      console.log("Message received:", message)
+      console.log("[v0] Message received:", message)
     },
   })
 
@@ -106,7 +116,8 @@ export function ConvAI() {
       setIsLoading(true)
       setError(null)
 
-      console.log("Requesting microphone permission...")
+      console.log("[v0] Starting conversation flow...")
+      console.log("[v0] Requesting microphone permission...")
       const hasPermission = await requestMicrophonePermission()
       if (!hasPermission) {
         setError("Microphone permission is required for voice conversation")
@@ -114,7 +125,7 @@ export function ConvAI() {
         return
       }
 
-      console.log("Getting signed URL...")
+      console.log("[v0] Getting signed URL...")
       const { signedUrl, isDemo } = await getSignedUrl()
 
       if (isDemo) {
@@ -126,13 +137,20 @@ export function ConvAI() {
         return
       }
 
-      console.log("Got signed URL, starting session...")
+      console.log("[v0] Got signed URL, starting session...")
+      console.log("[v0] Signed URL domain:", new URL(signedUrl).hostname)
+
       await conversation.startSession({ signedUrl })
-      console.log("Session started successfully")
+      console.log("[v0] Session started successfully")
 
       setIsLoading(false)
     } catch (error) {
-      console.error("Error starting conversation:", error)
+      console.error("[v0] Error starting conversation:", error)
+      console.log("[v0] Full error object:", {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        name: error instanceof Error ? error.name : undefined,
+      })
       setError(error instanceof Error ? error.message : "Failed to start conversation")
       setIsLoading(false)
     }

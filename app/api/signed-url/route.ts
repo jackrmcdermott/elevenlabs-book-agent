@@ -2,22 +2,13 @@ import { NextResponse } from "next/server"
 
 export async function GET() {
   try {
-    // Use the AGENT_ID from environment, or fall back to a placeholder for demo
-    let agentId = process.env.AGENT_ID
+    const agentId = process.env.AGENT_ID
     const apiKey = process.env.ELEVENLABS_API_KEY
 
-    // For demonstration purposes, use a placeholder if AGENT_ID is not set
-    if (!agentId) {
-      console.warn("AGENT_ID not found in environment, using placeholder for demo")
-      // This is a placeholder - you'll need to replace this with your actual agent ID
-      agentId = "demo-agent-id-placeholder"
-    }
-
     console.log("Environment check:", {
-      hasAgentId: !!process.env.AGENT_ID,
-      usingPlaceholder: !process.env.AGENT_ID,
+      hasAgentId: !!agentId,
       hasApiKey: !!apiKey,
-      agentId: agentId ? `${agentId.substring(0, 8)}...` : "undefined",
+      agentIdLength: agentId ? agentId.length : 0,
       nodeEnv: process.env.NODE_ENV,
     })
 
@@ -32,18 +23,19 @@ export async function GET() {
       )
     }
 
-    // If using placeholder, return a mock response for demo
-    if (agentId === "demo-agent-id-placeholder") {
-      console.log("Returning demo signed URL (not functional)")
-      return NextResponse.json({
-        signedUrl: "wss://demo-signed-url-placeholder.elevenlabs.io/conversation",
-        isDemo: true,
-      })
+    if (!agentId) {
+      console.error("AGENT_ID environment variable is not set")
+      return NextResponse.json(
+        {
+          error: "AGENT_ID is not configured",
+          details: "Please set the AGENT_ID environment variable with your ElevenLabs agent ID.",
+        },
+        { status: 400 },
+      )
     }
 
     console.log("Making request to ElevenLabs API...")
 
-    // Use direct fetch to ElevenLabs API
     const response = await fetch(
       `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${agentId}`,
       {
