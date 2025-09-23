@@ -318,8 +318,8 @@ export default function PhoneDemo() {
   }
 
   return (
-    <div className="flex justify-center items-start min-h-screen relative">
-      <div className="absolute left-6 top-6 w-72 bg-white rounded-lg shadow-lg border border-gray-200 p-4 flex-shrink-0">
+    <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start min-h-screen relative lg:gap-8 p-4">
+      <div className="w-full max-w-sm lg:max-w-xs bg-white rounded-lg shadow-lg border border-gray-200 p-4 flex-shrink-0 order-2 lg:order-1 lg:absolute lg:left-6 lg:top-6 mt-6 lg:mt-0">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Agent Knowledge</h3>
         <div className="space-y-4">
           <div>
@@ -383,257 +383,262 @@ export default function PhoneDemo() {
         </div>
       </div>
 
-      <div className="w-[375px] h-[812px] bg-black rounded-[3rem] p-2 shadow-2xl mt-6">
-        <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden relative">
-          <div className="absolute top-0 left-0 right-0 bg-white z-10">
-            <div className="flex justify-between items-center px-6 pt-3 pb-2">
-              <span className="text-lg font-semibold text-black">11:11</span>
+      <div className="flex justify-center w-full lg:w-auto order-1 lg:order-2">
+        <div className="w-[375px] h-[812px] bg-black rounded-[3rem] p-2 shadow-2xl flex-shrink-0">
+          <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden relative">
+            <div className="absolute top-0 left-0 right-0 bg-white z-10">
+              <div className="flex justify-between items-center px-6 pt-3 pb-2">
+                <span className="text-lg font-semibold text-black">11:11</span>
 
-              {/* Dynamic Island / Notch */}
-              <div className="w-32 h-6 bg-black rounded-full"></div>
+                {/* Dynamic Island / Notch */}
+                <div className="w-32 h-6 bg-black rounded-full"></div>
 
-              {/* Status icons */}
-              <div className="flex items-center gap-1">
-                {/* Signal bars */}
-                <div className="flex items-end gap-0.5">
-                  <div className="w-1 h-1 bg-black rounded-full"></div>
-                  <div className="w-1 h-2 bg-black rounded-full"></div>
-                  <div className="w-1 h-3 bg-black rounded-full"></div>
-                  <div className="w-1 h-4 bg-black rounded-full"></div>
-                </div>
+                {/* Status icons */}
+                <div className="flex items-center gap-1">
+                  {/* Signal bars */}
+                  <div className="flex items-end gap-0.5">
+                    <div className="w-1 h-1 bg-black rounded-full"></div>
+                    <div className="w-1 h-2 bg-black rounded-full"></div>
+                    <div className="w-1 h-3 bg-black rounded-full"></div>
+                    <div className="w-1 h-4 bg-black rounded-full"></div>
+                  </div>
 
-                {/* WiFi icon */}
-                <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
-                </svg>
+                  {/* WiFi icon */}
+                  <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
+                  </svg>
 
-                {/* Battery icon */}
-                <div className="w-6 h-3 border border-black rounded-sm relative ml-1">
-                  <div className="absolute right-0 top-0 w-5 h-full bg-black rounded-sm" style={{ left: "-2px" }}></div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center px-6 pt-0 pb-0.5 border-b border-gray-100">
-              <Button variant="ghost" size="icon">
-                <ChevronLeft className="h-6 w-6" />
-              </Button>
-              <div className="flex gap-4">
-                <Button variant="ghost" size="icon">
-                  <Search className="h-5 w-5" />
-                </Button>
-                <Button variant="ghost" size="icon">
-                  <Share className="h-5 w-5" />
-                </Button>
-                <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div
-            ref={scrollContainerRef}
-            className="overflow-y-auto px-6 pb-32"
-            style={{ height: "calc(100% - 200px)", paddingTop: "120px" }}
-          >
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{gatsbyContent.title}</h1>
-              <p className="text-gray-600 text-lg">{gatsbyContent.author}</p>
-            </div>
-
-            <div className="space-y-8">
-              {gatsbyContent.chapters.map((chapter) => (
-                <div key={chapter.id} className="space-y-4">
-                  {chapter.content.map((content, index) => renderContent(content, chapter.title))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
-            <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-              <span>02:21</span>
-              <span>-01:12</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-1 mb-4">
-              <div className="bg-blue-500 h-1 rounded-full" style={{ width: "35%" }}></div>
-            </div>
-
-            <div className="flex items-center justify-center gap-8 mb-4">
-              <Button variant="ghost" size="icon">
-                <SkipBack className="h-6 w-6" />
-              </Button>
-
-              <Button
-                size="icon"
-                className="w-14 h-14 rounded-full bg-gray-900 hover:bg-gray-800"
-                onClick={() => setIsPlaying(!isPlaying)}
-              >
-                {isPlaying ? <Pause className="h-6 w-6 text-white" /> : <Play className="h-6 w-6 text-white ml-1" />}
-              </Button>
-
-              <Button variant="ghost" size="icon">
-                <SkipForward className="h-6 w-6" />
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <Avatar className={`w-8 h-8 ${selectedVoice.color}`}>
-                <AvatarFallback className={`${selectedVoice.color} text-white font-semibold`}>
-                  {selectedVoice.icon}
-                </AvatarFallback>
-              </Avatar>
-              <span className="font-medium">{selectedVoice.name}</span>
-              <Button variant="ghost" size="icon" onClick={() => setShowBottomSheet(true)} className="[&_svg]:size-7">
-                <svg width="56" height="55" viewBox="0 0 56 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M28 48.25C39.1838 48.25 48.25 39.1838 48.25 28C48.25 16.8162 39.1838 7.75 28 7.75C16.8162 7.75 7.75 16.8162 7.75 28C7.75 31.3472 8.56209 34.5047 10 37.2862L7.75 48.25L19 46.1451C21.7112 47.4924 24.7671 48.25 28 48.25Z"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M27 47.25C38.1838 47.25 47.25 38.1838 47.25 27C47.25 15.8162 38.1838 6.75 27 6.75C15.8162 6.75 6.75 15.8162 6.75 27C6.75 30.3472 7.56209 33.5047 9 36.2862L6.75 47.25L18 45.1451C20.7112 46.4924 23.7671 47.25 27 47.25Z"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M29 47.25C40.1838 47.25 49.25 38.1838 49.25 27C49.25 15.8162 40.1838 6.75 29 6.75C17.8162 6.75 8.75 15.8162 8.75 27C8.75 30.3472 9.56209 33.5047 11 36.2862L8.75 47.25L20 45.1451C22.7112 46.4924 25.7671 47.25 29 47.25Z"
-                    stroke="black"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M38.2726 17.7384C37.795 17.2521 37.491 16.5387 37.3745 15.5413V15.125H36.5005V15.5409C36.38 16.555 36.0759 17.2524 35.6017 17.7267C35.1274 18.2009 34.43 18.505 33.4159 18.6255H33V19.4995H33.4163C34.4137 19.616 35.1271 19.92 35.6134 20.3976C36.0979 20.8733 36.408 21.5714 36.5005 22.5783V23H37.3745V22.5778C37.4633 21.5875 37.7731 20.8736 38.2609 20.3859C38.7486 19.8981 39.4625 19.5883 40.4528 19.4995H40.875V18.6255H40.4533C39.4464 18.533 38.7483 18.2229 38.2726 17.7384Z"
-                    fill="black"
-                  />
-                  <path
-                    d="M17.25 29.75C20.6283 29.75 22.804 30.4965 24.1537 31.8463C25.5035 33.196 26.25 35.3717 26.25 38.75H28.5C28.5 35.3717 29.2465 33.196 30.5963 31.8463C31.946 30.4965 34.1217 29.75 37.5 29.75V27.5C34.1217 27.5 31.946 26.7535 30.5963 25.4037C29.2465 24.054 28.5 21.8783 28.5 18.5H26.25C26.25 21.8783 25.5035 24.054 24.1537 25.4037C22.804 26.7535 20.6283 27.5 17.25 27.5V29.75Z"
-                    fill="black"
-                  />
-                </svg>
-              </Button>
-            </div>
-          </div>
-
-          {showBottomSheet && (
-            <>
-              <div className="absolute inset-0 bg-black/10 z-40" onClick={handleClose} />
-
-              <div
-                className={`absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 p-6 ${
-                  isClosing
-                    ? "animate-out slide-out-to-bottom duration-300"
-                    : "animate-in slide-in-from-bottom duration-300"
-                }`}
-                style={{ height: "55%" }}
-              >
-                <div className="flex justify-center mb-4">
-                  <div className="w-12 h-1 bg-gray-400 rounded-full"></div>
-                </div>
-
-                <div className="flex justify-end mb-0">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={handleEndConversation}
-                    className={`rounded-full w-8 h-8 flex items-center gap-1 ${
-                      conversation.status === "connected" ? "text-red-500 hover:text-red-600" : "text-gray-600"
-                    }`}
-                  >
-                    {conversation.status === "connected" ? (
-                      <>
-                        <Phone className="h-4 w-4 rotate-[135deg]" />
-                        <span className="text-xs font-medium">End</span>
-                      </>
-                    ) : (
-                      <X className="h-5 w-5" />
-                    )}
-                  </Button>
-                </div>
-
-                <div className="flex flex-col items-center mb-4">
-                  <div className="relative w-48 h-48 mb-4">
-                    <div className="absolute inset-0 rounded-full bg-gradient-radial from-cyan-200 via-blue-400 to-blue-600 shadow-2xl"></div>
-                    <div className="absolute inset-0 rounded-full bg-gradient-conic from-transparent via-white/30 to-transparent opacity-60"></div>
-                    <div className="absolute inset-4 rounded-full bg-gradient-radial from-white/20 via-transparent to-transparent"></div>
-                    <div className="absolute inset-8 rounded-full bg-gradient-radial from-transparent via-blue-300/40 to-blue-600/60"></div>
-                    {conversation.status === "connected" && !conversation.isSpeaking && (
-                      <div className="absolute inset-0 rounded-full border-2 border-white/50 animate-pulse"></div>
-                    )}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      {isDemoMode ? (
-                        <span
-                          className="text-gray-800 font-semibold bg-white/95 rounded-full backdrop-blur-sm shadow-lg"
-                          style={{
-                            fontSize: "0.9rem",
-                            paddingLeft: "1rem",
-                            paddingRight: "1rem",
-                            paddingTop: "0.75rem",
-                            paddingBottom: "0.75rem",
-                          }}
-                        >
-                          Demo Mode
-                        </span>
-                      ) : conversation.status === "connected" ? (
-                        <span
-                          className="text-gray-800 font-semibold bg-white/95 rounded-full backdrop-blur-sm shadow-lg"
-                          style={{
-                            fontSize: "0.9rem",
-                            paddingLeft: "1rem",
-                            paddingRight: "1rem",
-                            paddingTop: "0.75rem",
-                            paddingBottom: "0.75rem",
-                          }}
-                        >
-                          {conversation.isSpeaking ? "Talk to interrupt" : "Listening"}
-                        </span>
-                      ) : isLoading ? (
-                        <span
-                          className="text-gray-800 font-semibold bg-white/95 rounded-full backdrop-blur-sm shadow-lg"
-                          style={{
-                            fontSize: "0.9rem",
-                            paddingLeft: "1rem",
-                            paddingRight: "1rem",
-                            paddingTop: "0.75rem",
-                            paddingBottom: "0.75rem",
-                          }}
-                        >
-                          Starting...
-                        </span>
-                      ) : (
-                        <Button
-                          onClick={startConversation}
-                          className="bg-white/95 hover:bg-white text-gray-800 font-semibold rounded-full backdrop-blur-sm border-0 shadow-lg"
-                          style={{
-                            fontSize: "0.9rem",
-                            paddingLeft: "1rem",
-                            paddingRight: "1rem",
-                            paddingTop: "0.75rem",
-                            paddingBottom: "0.75rem",
-                          }}
-                          disabled={isLoading}
-                        >
-                          Ask
-                        </Button>
-                      )}
-                    </div>
+                  {/* Battery icon */}
+                  <div className="w-6 h-3 border border-black rounded-sm relative ml-1">
+                    <div
+                      className="absolute right-0 top-0 w-5 h-full bg-black rounded-sm"
+                      style={{ left: "-2px" }}
+                    ></div>
                   </div>
                 </div>
-
-                <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Ask about The Great Gatsby</h3>
-
-                <p className="text-center text-gray-500 text-sm" style={{ padding: "0px" }}>
-                  Try asking about a passage, historical context, character insights, or anything else.
-                </p>
               </div>
-            </>
-          )}
+
+              <div className="flex justify-between items-center px-6 pt-0 pb-0.5 border-b border-gray-100">
+                <Button variant="ghost" size="icon">
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+                <div className="flex gap-4">
+                  <Button variant="ghost" size="icon">
+                    <Search className="h-5 w-5" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Share className="h-5 w-5" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <MoreHorizontal className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div
+              ref={scrollContainerRef}
+              className="overflow-y-auto px-6 pb-32"
+              style={{ height: "calc(100% - 200px)", paddingTop: "120px" }}
+            >
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{gatsbyContent.title}</h1>
+                <p className="text-gray-600 text-lg">{gatsbyContent.author}</p>
+              </div>
+
+              <div className="space-y-8">
+                {gatsbyContent.chapters.map((chapter) => (
+                  <div key={chapter.id} className="space-y-4">
+                    {chapter.content.map((content, index) => renderContent(content, chapter.title))}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+              <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+                <span>02:21</span>
+                <span>-01:12</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-1 mb-4">
+                <div className="bg-blue-500 h-1 rounded-full" style={{ width: "35%" }}></div>
+              </div>
+
+              <div className="flex items-center justify-center gap-8 mb-4">
+                <Button variant="ghost" size="icon">
+                  <SkipBack className="h-6 w-6" />
+                </Button>
+
+                <Button
+                  size="icon"
+                  className="w-14 h-14 rounded-full bg-gray-900 hover:bg-gray-800"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                >
+                  {isPlaying ? <Pause className="h-6 w-6 text-white" /> : <Play className="h-6 w-6 text-white ml-1" />}
+                </Button>
+
+                <Button variant="ghost" size="icon">
+                  <SkipForward className="h-6 w-6" />
+                </Button>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <Avatar className={`w-8 h-8 ${selectedVoice.color}`}>
+                  <AvatarFallback className={`${selectedVoice.color} text-white font-semibold`}>
+                    {selectedVoice.icon}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="font-medium">{selectedVoice.name}</span>
+                <Button variant="ghost" size="icon" onClick={() => setShowBottomSheet(true)} className="[&_svg]:size-7">
+                  <svg width="56" height="55" viewBox="0 0 56 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M28 48.25C39.1838 48.25 48.25 39.1838 48.25 28C48.25 16.8162 39.1838 7.75 28 7.75C16.8162 7.75 7.75 16.8162 7.75 28C7.75 31.3472 8.56209 34.5047 10 37.2862L7.75 48.25L19 46.1451C21.7112 47.4924 24.7671 48.25 28 48.25Z"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M27 47.25C38.1838 47.25 47.25 38.1838 47.25 27C47.25 15.8162 38.1838 6.75 27 6.75C15.8162 6.75 6.75 15.8162 6.75 27C6.75 30.3472 7.56209 33.5047 9 36.2862L6.75 47.25L18 45.1451C20.7112 46.4924 23.7671 47.25 27 47.25Z"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M29 47.25C40.1838 47.25 49.25 38.1838 49.25 27C49.25 15.8162 40.1838 6.75 29 6.75C17.8162 6.75 8.75 15.8162 8.75 27C8.75 30.3472 9.56209 33.5047 11 36.2862L8.75 47.25L20 45.1451C22.7112 46.4924 25.7671 47.25 29 47.25Z"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M38.2726 17.7384C37.795 17.2521 37.491 16.5387 37.3745 15.5413V15.125H36.5005V15.5409C36.38 16.555 36.0759 17.2524 35.6017 17.7267C35.1274 18.2009 34.43 18.505 33.4159 18.6255H33V19.4995H33.4163C34.4137 19.616 35.1271 19.92 35.6134 20.3976C36.0979 20.8733 36.408 21.5714 36.5005 22.5783V23H37.3745V22.5778C37.4633 21.5875 37.7731 20.8736 38.2609 20.3859C38.7486 19.8981 39.4625 19.5883 40.4528 19.4995H40.875V18.6255H40.4533C39.4464 18.533 38.7483 18.2229 38.2726 17.7384Z"
+                      fill="black"
+                    />
+                    <path
+                      d="M17.25 29.75C20.6283 29.75 22.804 30.4965 24.1537 31.8463C25.5035 33.196 26.25 35.3717 26.25 38.75H28.5C28.5 35.3717 29.2465 33.196 30.5963 31.8463C31.946 30.4965 34.1217 29.75 37.5 29.75V27.5C34.1217 27.5 31.946 26.7535 30.5963 25.4037C29.2465 24.054 28.5 21.8783 28.5 18.5H26.25C26.25 21.8783 25.5035 24.054 24.1537 25.4037C22.804 26.7535 20.6283 27.5 17.25 27.5V29.75Z"
+                      fill="black"
+                    />
+                  </svg>
+                </Button>
+              </div>
+            </div>
+
+            {showBottomSheet && (
+              <>
+                <div className="absolute inset-0 bg-black/10 z-40" onClick={handleClose} />
+
+                <div
+                  className={`absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 p-6 ${
+                    isClosing
+                      ? "animate-out slide-out-to-bottom duration-300"
+                      : "animate-in slide-in-from-bottom duration-300"
+                  }`}
+                  style={{ height: "55%" }}
+                >
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-1 bg-gray-400 rounded-full"></div>
+                  </div>
+
+                  <div className="flex justify-end mb-0">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleEndConversation}
+                      className={`rounded-full w-8 h-8 flex items-center gap-1 ${
+                        conversation.status === "connected" ? "text-red-500 hover:text-red-600" : "text-gray-600"
+                      }`}
+                    >
+                      {conversation.status === "connected" ? (
+                        <>
+                          <Phone className="h-4 w-4 rotate-[135deg]" />
+                          <span className="text-xs font-medium">End</span>
+                        </>
+                      ) : (
+                        <X className="h-5 w-5" />
+                      )}
+                    </Button>
+                  </div>
+
+                  <div className="flex flex-col items-center mb-4">
+                    <div className="relative w-48 h-48 mb-4">
+                      <div className="absolute inset-0 rounded-full bg-gradient-radial from-cyan-200 via-blue-400 to-blue-600 shadow-2xl"></div>
+                      <div className="absolute inset-0 rounded-full bg-gradient-conic from-transparent via-white/30 to-transparent opacity-60"></div>
+                      <div className="absolute inset-4 rounded-full bg-gradient-radial from-white/20 via-transparent to-transparent"></div>
+                      <div className="absolute inset-8 rounded-full bg-gradient-radial from-transparent via-blue-300/40 to-blue-600/60"></div>
+                      {conversation.status === "connected" && !conversation.isSpeaking && (
+                        <div className="absolute inset-0 rounded-full border-2 border-white/50 animate-pulse"></div>
+                      )}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        {isDemoMode ? (
+                          <span
+                            className="text-gray-800 font-semibold bg-white/95 rounded-full backdrop-blur-sm shadow-lg"
+                            style={{
+                              fontSize: "0.9rem",
+                              paddingLeft: "1rem",
+                              paddingRight: "1rem",
+                              paddingTop: "0.75rem",
+                              paddingBottom: "0.75rem",
+                            }}
+                          >
+                            Demo Mode
+                          </span>
+                        ) : conversation.status === "connected" ? (
+                          <span
+                            className="text-gray-800 font-semibold bg-white/95 rounded-full backdrop-blur-sm shadow-lg"
+                            style={{
+                              fontSize: "0.9rem",
+                              paddingLeft: "1rem",
+                              paddingRight: "1rem",
+                              paddingTop: "0.75rem",
+                              paddingBottom: "0.75rem",
+                            }}
+                          >
+                            {conversation.isSpeaking ? "Talk to interrupt" : "Listening"}
+                          </span>
+                        ) : isLoading ? (
+                          <span
+                            className="text-gray-800 font-semibold bg-white/95 rounded-full backdrop-blur-sm shadow-lg"
+                            style={{
+                              fontSize: "0.9rem",
+                              paddingLeft: "1rem",
+                              paddingRight: "1rem",
+                              paddingTop: "0.75rem",
+                              paddingBottom: "0.75rem",
+                            }}
+                          >
+                            Starting...
+                          </span>
+                        ) : (
+                          <Button
+                            onClick={startConversation}
+                            className="bg-white/95 hover:bg-white text-gray-800 font-semibold rounded-full backdrop-blur-sm border-0 shadow-lg"
+                            style={{
+                              fontSize: "0.9rem",
+                              paddingLeft: "1rem",
+                              paddingRight: "1rem",
+                              paddingTop: "0.75rem",
+                              paddingBottom: "0.75rem",
+                            }}
+                            disabled={isLoading}
+                          >
+                            Ask
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Ask about The Great Gatsby</h3>
+
+                  <p className="text-center text-gray-500 text-sm" style={{ padding: "0px" }}>
+                    Try asking about a passage, historical context, character insights, or anything else.
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
