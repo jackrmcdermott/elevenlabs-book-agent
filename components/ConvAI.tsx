@@ -54,6 +54,15 @@ async function getSignedUrl(): Promise<{ signedUrl: string; isDemo?: boolean }> 
         errorData,
       })
 
+      if (
+        response.status === 400 &&
+        (errorData.error?.includes("ELEVENLABS_API_KEY") || errorData.error?.includes("AGENT_ID"))
+      ) {
+        throw new Error(
+          `Configuration Error: ${errorData.error}. Please add the missing environment variables to your Vercel deployment.`,
+        )
+      }
+
       throw new Error(errorData.details || errorData.error || `HTTP ${response.status}: ${response.statusText}`)
     }
 
@@ -252,7 +261,17 @@ export function ConvAI() {
                           <Code>AGENT_ID=your_agent_id</Code>
                         </div>
                       </div>
-                      <div className="mt-2 text-blue-600">💡 In Vercel: Project Settings → Environment Variables</div>
+                      <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded">
+                        <div className="font-medium text-blue-800 mb-1">For Vercel Deployment:</div>
+                        <div className="text-blue-700 space-y-1">
+                          <div>1. Go to your Vercel dashboard</div>
+                          <div>
+                            2. Select your project: <Code>elevenlabs-book-agent</Code>
+                          </div>
+                          <div>3. Go to Settings → Environment Variables</div>
+                          <div>4. Add both variables and redeploy</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
