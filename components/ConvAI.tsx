@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useCallback, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useConversation } from "@elevenlabs/react"
 import { cn } from "@/lib/utils"
@@ -149,8 +149,38 @@ export function ConvAI() {
       console.log("[v0] Got signed URL, starting session...")
       console.log("[v0] Signed URL domain:", new URL(signedUrl).hostname)
 
-      await conversation.startSession({ signedUrl })
-      console.log("[v0] Session started successfully")
+      try {
+        const urlObj = new URL(signedUrl)
+        console.log("[v0] Signed URL details:", {
+          protocol: urlObj.protocol,
+          hostname: urlObj.hostname,
+          pathname: urlObj.pathname,
+          hasSearchParams: urlObj.search.length > 0,
+        })
+      } catch (urlError) {
+        console.error("[v0] Invalid signed URL format:", urlError)
+        throw new Error("Received invalid signed URL from server")
+      }
+
+      console.log("[v0] Calling conversation.startSession...")
+      try {
+        await conversation.startSession({ signedUrl })
+        console.log("[v0] Session started successfully")
+      } catch (sessionError) {
+        console.error("[v0] Error in startSession:", sessionError)
+        console.log("[v0] Session error details:", {
+          message: sessionError instanceof Error ? sessionError.message : String(sessionError),
+          name: sessionError instanceof Error ? sessionError.name : undefined,
+          stack: sessionError instanceof Error ? sessionError.stack : undefined,
+          // @ts-ignore - checking for additional error properties
+          code: sessionError?.code,
+          // @ts-ignore
+          type: sessionError?.type,
+          // @ts-ignore
+          details: sessionError?.details,
+        })
+        throw sessionError
+      }
 
       setIsLoading(false)
     } catch (error) {
@@ -160,12 +190,13 @@ export function ConvAI() {
         stack: error instanceof Error ? error.stack : undefined,
         name: error instanceof Error ? error.name : undefined,
       })
-      setError(error instanceof Error ? error.message : "Failed to start conversation")
+      const errorMessage = error instanceof Error ? error.message : "Failed to start conversation"
+      setError(`${errorMessage}${errorMessage.includes("Configuration") ? "" : ". Check browser console for details."}`)
       setIsLoading(false)
     }
   }
 
-  const stopConversation = useCallback(async () => {
+  async function stopConversation() {
     try {
       setIsLoading(true)
       await conversation.endSession()
@@ -177,7 +208,7 @@ export function ConvAI() {
     } finally {
       setIsLoading(false)
     }
-  }, [conversation])
+  }
 
   // Check if error is related to missing environment variables
   const isConfigError = error?.includes("AGENT_ID") || error?.includes("ELEVENLABS_API_KEY")
