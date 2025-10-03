@@ -108,7 +108,33 @@ export function ConvAI() {
         type: error.type,
         stack: error.stack,
       })
-      if (isDemoMode) {
+
+      if (error instanceof CloseEvent) {
+        console.error("[v0] WebSocket CloseEvent:", {
+          code: error.code,
+          reason: error.reason,
+          wasClean: error.wasClean,
+        })
+
+        // Common WebSocket close codes
+        const closeCodeMessages: Record<number, string> = {
+          1000: "Normal closure",
+          1001: "Going away",
+          1002: "Protocol error",
+          1003: "Unsupported data",
+          1006: "Abnormal closure (no close frame)",
+          1007: "Invalid frame payload data",
+          1008: "Policy violation",
+          1009: "Message too big",
+          1010: "Missing extension",
+          1011: "Internal server error",
+          1015: "TLS handshake failure",
+          3000: "Authorization failed - check your AGENT_ID and API key",
+        }
+
+        const closeMessage = closeCodeMessages[error.code] || `Unknown close code: ${error.code}`
+        setError(`WebSocket connection closed: ${closeMessage}${error.reason ? ` (${error.reason})` : ""}`)
+      } else if (isDemoMode) {
         setError("Demo mode: This is a placeholder connection. Set up your AGENT_ID for real functionality.")
       } else {
         setError(`Conversation error: ${error.message || "Unknown error"}`)
